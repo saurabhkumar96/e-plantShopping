@@ -1,5 +1,4 @@
 import React from "react";
-import "./AboutUs.css";
 
 const AboutUs = () => {
   return (
@@ -7,28 +6,28 @@ const AboutUs = () => {
       <h1>About Paradise Nursery</h1>
 
       <p>
-        Welcome to <strong>Paradise Nursery</strong>, your one-stop destination
-        for beautiful and healthy indoor plants. We are passionate about bringing
-        nature closer to your home by offering a wide variety of houseplants that
-        enhance both aesthetics and well-being.
+        Welcome to Paradise Nursery, your one-stop destination for beautiful
+        and healthy indoor plants. We are dedicated to bringing nature closer
+        to your home by offering a wide variety of plants that enhance both
+        aesthetics and well-being.
       </p>
 
       <p>
-        At Paradise Nursery, we believe that plants are more than just decoration.
-        They improve air quality, reduce stress, and create a peaceful environment.
-        Our carefully selected collection ensures that every plant meets high
-        standards of quality and freshness.
+        At Paradise Nursery, we believe that plants are more than just
+        decoration. They help improve air quality, reduce stress, and create a
+        peaceful and refreshing environment in your living and working spaces.
       </p>
 
       <p>
-        Our mission is to make plant shopping easy and enjoyable for everyone.
-        Whether you are a beginner or a plant enthusiast, our platform helps you
-        discover the perfect plants with detailed descriptions, pricing, and a
-        seamless shopping experience.
+        Our mission is to provide high-quality plants and make plant shopping
+        easy and enjoyable for everyone. Whether you are a beginner or a plant
+        enthusiast, we offer carefully selected plants along with all the
+        necessary information to help you care for them.
       </p>
 
       <p>
-        Thank you for choosing Paradise Nursery. Let’s grow together 🌿
+        Thank you for choosing Paradise Nursery. Let’s grow together and make
+        the world greener!
       </p>
     </div>
   );

@@ -1,82 +1,108 @@
-import { createSlice } from "@reduxjs/toolkit";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeItem, updateQuantity } from "../redux/CartSlice";
+import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 
-const initialState = {
-  items: [],
-  totalQuantity: 0,
-  totalAmount: 0,
+const CartItem = () => {
+  const dispatch = useDispatch();
+  const { items, totalAmount } = useSelector((state) => state.cart);
+
+  return (
+    <div>
+      <Navbar />
+
+      <h1 style={{ textAlign: "center" }}>Your Cart</h1>
+
+      {items.length === 0 ? (
+        <h2 style={{ textAlign: "center" }}>Cart is Empty</h2>
+      ) : (
+        <div style={{ padding: "20px" }}>
+          {items.map((item) => (
+            <div key={item.id} style={styles.card}>
+              <img src={item.image} alt={item.name} width="100" />
+
+              <div>
+                <h3>{item.name}</h3>
+                <p>Price: ${item.price}</p>
+                <p>Total: ${item.totalPrice}</p>
+
+                <div>
+                  <button
+                    onClick={() =>
+                      dispatch(updateQuantity({ id: item.id, type: "dec" }))
+                    }
+                  >
+                    -
+                  </button>
+
+                  <span style={{ margin: "0 10px" }}>
+                    {item.quantity}
+                  </span>
+
+                  <button
+                    onClick={() =>
+                      dispatch(updateQuantity({ id: item.id, type: "inc" }))
+                    }
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => dispatch(removeItem(item.id))}
+                  style={{ marginTop: "10px", color: "red" }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <h2>Total Amount: ${totalAmount}</h2>
+
+          <button
+            onClick={() => alert("Coming Soon")}
+            style={styles.checkout}
+          >
+            Checkout
+          </button>
+
+          <br /><br />
+
+          <Link to="/plants">
+            <button style={styles.continue}>
+              Continue Shopping
+            </button>
+          </Link>
+        </div>
+      )}
+    </div>
+  );
 };
 
-const CartSlice = createSlice({
-  name: "cart",
-  initialState,
-  reducers: {
-    addToCart: (state, action) => {
-      const existingItem = state.items.find(
-        (item) => item.id === action.payload.id
-      );
-
-      state.totalQuantity++;
-
-      if (!existingItem) {
-        state.items.push({
-          ...action.payload,
-          quantity: 1,
-          totalPrice: action.payload.price,
-        });
-      } else {
-        existingItem.quantity++;
-        existingItem.totalPrice += action.payload.price;
-      }
-
-      state.totalAmount += action.payload.price;
-    },
-
-    removeFromCart: (state, action) => {
-      const item = state.items.find((i) => i.id === action.payload);
-
-      if (!item) return;
-
-      state.totalQuantity -= item.quantity;
-      state.totalAmount -= item.totalPrice;
-
-      state.items = state.items.filter((i) => i.id !== action.payload);
-    },
-
-    increaseQuantity: (state, action) => {
-      const item = state.items.find((i) => i.id === action.payload);
-
-      if (!item) return;
-
-      item.quantity++;
-      item.totalPrice += item.price;
-
-      state.totalQuantity++;
-      state.totalAmount += item.price;
-    },
-
-    decreaseQuantity: (state, action) => {
-      const item = state.items.find((i) => i.id === action.payload);
-
-      if (!item) return;
-
-      if (item.quantity === 1) {
-        state.items = state.items.filter((i) => i.id !== action.payload);
-      } else {
-        item.quantity--;
-        item.totalPrice -= item.price;
-      }
-
-      state.totalQuantity--;
-      state.totalAmount -= item.price;
-    },
+const styles = {
+  card: {
+    display: "flex",
+    gap: "20px",
+    border: "1px solid #ccc",
+    padding: "15px",
+    marginBottom: "15px",
   },
-});
+  checkout: {
+    padding: "10px 20px",
+    background: "green",
+    color: "white",
+    border: "none",
+    cursor: "pointer",
+  },
+  continue: {
+    padding: "10px 20px",
+    background: "blue",
+    color: "white",
+    border: "none",
+    cursor: "pointer",
+  },
+};
 
-export const {
-  addToCart,
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-} = CartSlice.actions;
-
-export default CartSlice.reducer;
+export default CartItem;
